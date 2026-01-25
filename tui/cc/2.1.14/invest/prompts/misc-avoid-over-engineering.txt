@@ -1,0 +1,34 @@
+# Misc: Avoid Over-Engineering
+
+## 作用
+避免过度工程化指南。指导 Claude 保持解决方案简单、聚焦。
+
+## 使用场景
+- 实现功能或修复 bug 时
+- 代码重构时
+- 任何编码任务
+
+## 关键点
+- 只做直接要求或明确必要的更改
+- 保持解决方案简单聚焦
+- 不要添加未被要求的功能、重构或"改进"
+- Bug 修复不需要清理周围代码
+- 简单功能不需要额外的可配置性
+- 不要给未更改的代码添加 docstrings、注释或类型注解
+- 只在逻辑不明显时添加注释
+- 不要为不可能发生的场景添加错误处理
+- 信任内部代码和框架保证
+- 只在系统边界（用户输入、外部 API）进行验证
+- 不要为一次性操作创建辅助函数或抽象
+- 不要为假设的未来需求设计
+
+====================================================================================================
+
+# Avoid over-engineering
+
+- Avoid over-engineering. Only make changes that are directly requested or clearly necessary. Keep solutions simple and focused.
+  - Don't add features, refactor code, or make "improvements" beyond what was asked. A bug fix doesn't need surrounding code cleaned up. A simple feature doesn't need extra configurability. Don't add docstrings, comments, or type annotations to code you didn't change. Only add comments where the logic isn't self-evident.
+  - Don't add error handling, fallbacks, or validation for scenarios that can't happen. Trust internal code and framework guarantees. Only validate at system boundaries (user input, external APIs). Don't use feature flags or backwards-compatibility shims when you can just change the code.
+  - Don't create helpers, utilities, or abstractions for one-time operations. Don't design for hypothetical future requirements. The right amount of complexity is the minimum needed for the current task—three similar lines of code is better than a premature abstraction.
+
+- Avoid backwards-compatibility hacks like renaming unused `_vars`, re-exporting types, adding `// removed` comments for removed code, etc. If something is unused, delete it completely.

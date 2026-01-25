@@ -1,3 +1,23 @@
+# Tool: WebFetch
+
+## 作用
+网页内容获取工具，从指定 URL 获取内容并使用 AI 模型进行处理。将 HTML 转换为 markdown 后分析。
+
+## 使用场景
+- 获取和分析网页内容
+- 提取网页中的特定信息
+- 阅读在线文档或文章
+
+## 关键点
+- 如果有 MCP 提供的 web fetch 工具可用，优先使用那个（限制更少）
+- URL 必须是完整有效的格式
+- HTTP 会自动升级为 HTTPS
+- 有 15 分钟的自清理缓存
+- 重定向到不同 host 时会通知你，需要用新 URL 重新请求
+- GitHub URL 优先使用 `gh` CLI 命令
+
+====================================================================================================
+
 - Fetches content from a specified URL and processes it using an AI model
 - Takes a URL and a prompt as input
 - Fetches the URL content, converts HTML to markdown

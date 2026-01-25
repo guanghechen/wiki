@@ -1,3 +1,24 @@
+# Tool: Read
+
+## 作用
+文件读取工具，用于从本地文件系统读取文件内容。支持读取文本文件、图片（PNG、JPG 等）、PDF 和 Jupyter notebooks。
+
+## 使用场景
+- 查看源代码文件
+- 读取配置文件
+- 分析图片内容（多模态能力）
+- 阅读 PDF 文档
+- 查看 Jupyter notebook 的代码和输出
+
+## 关键点
+- 必须使用绝对路径
+- 默认读取前 2000 行
+- 超过 2000 字符的行会被截断
+- 结果使用 `cat -n` 格式（带行号）
+- 可以并行读取多个文件
+
+====================================================================================================
+
 Reads a file from the local filesystem. You can access any file directly by using this tool.
 Assume this tool is able to read all files on the machine. If the User provides a path to a file assume that path is valid. It is okay to read a file that does not exist; an error will be returned.
 

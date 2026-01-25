@@ -1,3 +1,30 @@
+# Tool: TodoWrite
+
+## 作用
+任务管理工具，用于创建和管理当前编码会话的结构化任务列表。帮助追踪进度、组织复杂任务，并向用户展示工作进展。
+
+## 使用场景
+- 复杂的多步骤任务（3 个或更多步骤）
+- 非平凡的复杂任务
+- 用户明确要求使用 todo list
+- 用户提供多个任务（编号或逗号分隔）
+- 收到新指令后立即记录
+- 开始任务时标记为 in_progress
+- 完成任务后标记为 completed
+
+## 不使用的场景
+- 单一简单任务
+- 可在 3 个简单步骤内完成的任务
+- 纯对话或信息性请求
+
+## 关键点
+- 任务状态：pending、in_progress、completed
+- 同时只能有一个任务处于 in_progress 状态
+- 每个任务需要 content（祈使句）和 activeForm（进行时）两种形式
+- 完成任务后立即标记，不要批量更新
+
+====================================================================================================
+
 Use this tool to create and manage a structured task list for your current coding session. This helps you track progress, organize complex tasks, and demonstrate thoroughness to the user.
 It also helps the user understand the progress of the task and overall progress of their requests.
 
@@ -21,127 +48,6 @@ Skip using this tool when:
 4. The task is purely conversational or informational
 
 NOTE that you should not use this tool if there is only one trivial task to do. In this case you are better off just doing the task directly.
-
-## Examples of When to Use the Todo List
-
-<example>
-User: I want to add a dark mode toggle to the application settings. Make sure you run the tests and build when you're done!
-Assistant: I'll help add a dark mode toggle to your application settings. Let me create a todo list to track this implementation.
-*Creates todo list with the following items:*
-1. Creating dark mode toggle component in Settings page
-2. Adding dark mode state management (context/store)
-3. Implementing CSS-in-JS styles for dark theme
-4. Updating existing components to support theme switching
-5. Running tests and build process, addressing any failures or errors that occur
-*Begins working on the first task*
-
-<reasoning>
-The assistant used the todo list because:
-1. Adding dark mode is a multi-step feature requiring UI, state management, and styling changes
-2. The user explicitly requested tests and build be run afterward
-3. The assistant inferred that tests and build need to pass by adding "Ensure tests and build succeed" as the final task
-</reasoning>
-</example>
-
-<example>
-User: Help me rename the function getCwd to getCurrentWorkingDirectory across my project
-Assistant: Let me first search through your codebase to find all occurrences of 'getCwd'.
-*Uses grep or search tools to locate all instances of getCwd in the codebase*
-Assistant: I've found 15 instances of 'getCwd' across 8 different files. Let me create a todo list to track these changes.
-*Creates todo list with specific items for each file that needs updating*
-
-<reasoning>
-The assistant used the todo list because:
-1. First, the assistant searched to understand the scope of the task
-2. Upon finding multiple occurrences across different files, it determined this was a complex task with multiple steps
-3. The todo list helps ensure every instance is tracked and updated systematically
-4. This approach prevents missing any occurrences and maintains code consistency
-</reasoning>
-</example>
-
-
-<example>
-User: I need to implement these features for my e-commerce site: user registration, product catalog, shopping cart, and checkout flow.
-Assistant: I'll help implement these features. First, let's add all the features to the todo list.
-*Creates a todo list breaking down each feature into specific tasks based on the project architecture*
-Assistant: Let's start with user registration. This will involve creating database models, API endpoints, and frontend forms that integrate with your existing authentication system.
-
-<reasoning>
-The assistant used the todo list because:
-1. The user provided multiple complex features to implement in a comma separated list
-2. The todo list helps organize these large features into manageable tasks
-3. This approach allows for tracking progress across the entire implementation
-</reasoning>
-</example>
-
-<example>
-User: Can you help optimize my React application? It's rendering slowly and has performance issues.</user>
-Assistant: I'll help optimize your React application. First, let me examine your codebase to identify potential performance bottlenecks.
-*Reviews component structure, render patterns, state management, and data fetching*
-Assistant: After analyzing your codebase, I've identified several performance issues. Let me create a todo list to track our optimization efforts.
-*Creates todo list with items like: 1) Implementing memoization for expensive calculations in ProductList, 2) Adding virtualization for long lists in Dashboard, 3) Optimizing image loading in Gallery component, 4) Fixing state update loops in ShoppingCart, 5) Reviewing bundle size and implementing code splitting*
-Let's start by implementing memoization for the expensive calculations in your ProductList component.</assistant>
-
-<reasoning>
-The assistant used the todo list because:
-1. First, the assistant examined the codebase to identify specific performance issues
-2. Based on this analysis, it identified multiple optimization opportunities
-3. Performance optimization is a non-trivial task requiring multiple steps
-4. The todo list helps methodically track improvements across different components
-5. This systematic approach ensures all performance bottlenecks are addressed
-</reasoning>
-</example>
-
-## Examples of When NOT to Use the Todo List
-
-<example>
-User: How do I print 'Hello World' in Python?
-Assistant: In Python, you can print "Hello World" with this simple code:
-
-python
-print("Hello World")
-
-This will output the text "Hello World" to the console when executed.</assistant>
-
-<reasoning>
-The assistant did not use the todo list because this is a single, trivial task that can be completed in one step. There's no need to track multiple tasks or steps for such a straightforward request.
-</reasoning>
-</example>
-
-<example>
-User: What does the git status command do?
-Assistant: The git status command shows the current state of your working directory and staging area. It displays which changes have been staged, which haven't, and which files aren't being tracked by Git. This is a fundamental command for understanding the current state of your repository before making commits.
-
-<reasoning>
-The assistant did not use the todo list because this is an informational request with no actual coding task to complete. The user is simply asking for an explanation, not for the assistant to perform multiple steps or tasks.
-</reasoning>
-</example>
-
-<example>
-User: Can you add a comment to the calculateTotal function to explain what it does?
-Assistant: Sure, let me add a comment to the calculateTotal function to explain what it does.
-* Uses the ${R6} tool to add a comment to the calculateTotal function *
-
-<reasoning>
-The assistant did not use the todo list because this is a single, straightforward task confined to one location in the code. Adding a comment doesn't require tracking multiple steps or systematic organization.
-</reasoning>
-</example>
-
-<example>
-User: Run npm install for me and tell me what happens.
-Assistant: I'll run the npm install command for you.
-
-*Executes: npm install*
-
-The command completed successfully. Here's the output:
-[Output of npm install command]
-
-All dependencies have been installed according to your package.json file.
-
-<reasoning>
-The assistant did not use the todo list because this is a single command execution with immediate results. There are no multiple steps to track or organize, making the todo list unnecessary for this straightforward task.
-</reasoning>
-</example>
 
 ## Task States and Management
 

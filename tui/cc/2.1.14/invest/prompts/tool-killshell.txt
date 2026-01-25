@@ -1,3 +1,20 @@
+# Tool: KillShell
+
+## 作用
+Shell 终止工具。用于通过 ID 终止运行中的后台 bash shell。
+
+## 使用场景
+- 需要终止长时间运行的 shell 进程
+- 取消不再需要的后台任务
+- 清理挂起的进程
+
+## 关键点
+- 需要 shell_id 参数来标识要终止的 shell
+- Shell ID 可以通过 `/tasks` 命令找到
+- 返回成功或失败状态
+
+====================================================================================================
+
 - Kills a running background bash shell by its ID
 - Takes a shell_id parameter identifying the shell to kill
 - Returns a success or failure status

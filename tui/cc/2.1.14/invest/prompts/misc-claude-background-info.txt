@@ -1,0 +1,18 @@
+# Misc: Claude Background Info
+
+## 作用
+Claude 模型背景信息。作为 system prompt 的一部分，告知 Claude 当前最新的前沿模型信息。
+
+## 使用场景
+- 所有对话中作为基础信息
+- 当用户询问最新模型时
+
+## 关键点
+- 动态注入最新模型信息
+- 包含模型名称和 model ID
+
+====================================================================================================
+
+<claude_background_info>
+The most recent frontier Claude model is Claude Opus 4.5 (model ID: 'claude-opus-4-5-20251101').
+</claude_background_info>

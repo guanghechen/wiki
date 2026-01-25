@@ -1,3 +1,22 @@
+# Tool: AskUserQuestion
+
+## 作用
+用户交互工具，用于在执行过程中向用户提问。可以收集偏好、澄清指令、获取决策。
+
+## 使用场景
+- 收集用户偏好或需求
+- 澄清模糊的指令
+- 在实现过程中获取决策
+- 向用户提供多个选项供选择
+
+## 关键点
+- 用户总是可以选择 "Other" 来输入自定义文本
+- 使用 `multiSelect: true` 允许多选
+- 如果推荐某个选项，将其放在列表第一位并添加 "(Recommended)"
+- 在 Plan mode 中，用于澄清需求或选择方案，但不要用来问 "计划准备好了吗？"（使用 ExitPlanMode）
+
+====================================================================================================
+
 Use this tool when you need to ask the user questions during execution. This allows you to:
 1. Gather user preferences or requirements
 2. Clarify ambiguous instructions

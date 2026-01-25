@@ -1,0 +1,67 @@
+# Tool: Task
+
+## 作用
+任务启动工具。用于启动专门的子 agent（subprocess）来自主处理复杂、多步骤的任务。
+
+## 使用场景
+- 需要多轮搜索和分析的开放式探索任务
+- 复杂的代码研究和理解任务
+- 需要并行处理的多个独立任务
+- 规划和设计实现方案
+
+## 可用的 Agent 类型
+- **Bash**: 命令执行专家，用于 git 操作、命令执行等
+- **general-purpose**: 通用目的 agent，用于研究复杂问题、搜索代码、执行多步骤任务
+- **statusline-setup**: 配置用户的 Claude Code 状态栏设置
+- **Explore**: 快速代码库探索专家（使用 Haiku 模型）
+- **Plan**: 软件架构师 agent，用于设计实现计划
+- **claude-code-guide**: 帮助用户理解 Claude Code、Agent SDK、Claude API
+
+## 关键点
+- 必须指定 `subagent_type` 参数选择 agent 类型
+- 总是包含简短描述（3-5 词）说明 agent 要做什么
+- 可以使用 `run_in_background` 参数后台运行
+- 可以使用 `resume` 参数恢复之前的 agent
+- Agent 结果不可见给用户，需要发送文本消息总结结果
+- 尽可能并行启动多个独立的 agent
+
+## 不应使用 Task tool 的情况
+- 读取特定文件路径（使用 Read 或 Glob）
+- 搜索特定类定义（使用 Glob）
+- 在特定文件中搜索代码（使用 Read）
+
+====================================================================================================
+
+Launch a new agent to handle complex, multi-step tasks autonomously.
+
+The Task tool launches specialized agents (subprocesses) that autonomously handle complex tasks. Each agent type has specific capabilities and tools available to it.
+
+Available agent types and the tools they have access to:
+- Bash: Command execution specialist for running bash commands. Use this for git operations, command execution, and other terminal tasks. (Tools: Bash)
+- general-purpose: General-purpose agent for researching complex questions, searching for code, and executing multi-step tasks. When you are searching for a keyword or file and are not confident that you will find the right match in the first few tries use this agent to perform the search for you. (Tools: *)
+- statusline-setup: Use this agent to configure the user's Claude Code status line setting. (Tools: Read, Edit)
+- Explore: Fast agent specialized for exploring codebases. Use this when you need to quickly find files by patterns (eg. "src/components/**/*.tsx"), search code for keywords (eg. "API endpoints"), or answer questions about the codebase (eg. "how do API endpoints work?"). When calling this agent, specify the desired thoroughness level: "quick" for basic searches, "medium" for moderate exploration, or "very thorough" for comprehensive analysis across multiple locations and naming conventions. (Tools: All tools except Task, ExitPlanMode, Edit, Write, NotebookEdit)
+- Plan: Software architect agent for designing implementation plans. Use this when you need to plan the implementation strategy for a task. Returns step-by-step plans, identifies critical files, and considers architectural trade-offs. (Tools: All tools except Task, ExitPlanMode, Edit, Write, NotebookEdit)
+- claude-code-guide: Use this agent when the user asks questions ("Can Claude...", "Does Claude...", "How do I...") about: (1) Claude Code (the CLI tool) - features, hooks, slash commands, MCP servers, settings, IDE integrations, keyboard shortcuts; (2) Claude Agent SDK - building custom agents; (3) Claude API (formerly Anthropic API) - API usage, tool use, Anthropic SDK usage. **IMPORTANT:** Before spawning a new agent, check if there is already a running or recently completed claude-code-guide agent that you can resume using the "resume" parameter. (Tools: Glob, Grep, Read, WebFetch, WebSearch)
+
+When using the Task tool, you must specify a subagent_type parameter to select which agent type to use.
+
+When NOT to use the Task tool:
+- If you want to read a specific file path, use the Read or Glob tool instead of the Task tool, to find the match more quickly
+- If you are searching for a specific class definition like "class Foo", use the Glob tool instead, to find the match more quickly
+- If you are searching for code within a specific file or set of 2-3 files, use the Read tool instead of the Task tool, to find the match more quickly
+- Other tasks that are not related to the agent descriptions above
+
+Usage notes:
+- Always include a short description (3-5 words) summarizing what the agent will do
+- Launch multiple agents concurrently whenever possible, to maximize performance; to do that, use a single message with multiple tool uses
+- When the agent is done, it will return a single message back to you. The result returned by the agent is not visible to the user. To show the user the result, you should send a text message back to the user with a concise summary of the result.
+- You can optionally run agents in the background using the run_in_background parameter. When an agent runs in the background, the tool result will include an output_file path. To check on the agent's progress or retrieve its results, use the Read tool to read the output file, or use Bash with `tail` to see recent output. You can continue working while background agents run.
+- Agents can be resumed using the `resume` parameter by passing the agent ID from a previous invocation. When resumed, the agent continues with its full previous context preserved. When NOT resuming, each invocation starts fresh and you should provide a detailed task description with all necessary context.
+- When the agent is done, it will return a single message back to you along with its agent ID. You can use this ID to resume the agent later if needed for follow-up work.
+- Provide clear, detailed prompts so the agent can work autonomously and return exactly the information you need.
+- Agents with "access to current context" can see the full conversation history before the tool call. When using these agents, you can write concise prompts that reference earlier context (e.g., "investigate the error discussed above") instead of repeating information. The agent will receive all prior messages and understand the context.
+- The agent's outputs should generally be trusted
+- Clearly tell the agent whether you expect it to write code or just to do research (search, file reads, web fetches, etc.), since it is not aware of the user's intent
+- If the agent description mentions that it should be used proactively, then you should try your best to use it without the user having to ask for it first. Use your judgement.
+- If the user specifies that they want you to run agents "in parallel", you MUST send a single message with multiple Task tool use content blocks. For example, if you need to launch both a build-validator agent and a test-runner agent in parallel, send a single message with both tool calls.

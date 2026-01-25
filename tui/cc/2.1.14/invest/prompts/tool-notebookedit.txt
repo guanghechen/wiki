@@ -1,3 +1,22 @@
+# Tool: NotebookEdit
+
+## 作用
+Jupyter Notebook 编辑工具。用于替换、插入或删除 notebook 中特定单元格的内容。
+
+## 使用场景
+- 修改 Jupyter notebook 中的代码单元格
+- 添加新的单元格（使用 edit_mode=insert）
+- 删除单元格（使用 edit_mode=delete）
+- 更新 markdown 单元格
+
+## 关键点
+- notebook_path 必须是绝对路径
+- cell_number 是 0-indexed（从 0 开始）
+- edit_mode: replace（默认）、insert、delete
+- Jupyter notebooks 是交互式文档，常用于数据分析和科学计算
+
+====================================================================================================
+
 Completely replaces the contents of a specific cell in a Jupyter notebook (.ipynb file) with new source.
 
 Jupyter notebooks are interactive documents that combine code, text, and visualizations, commonly used for data analysis and scientific computing.

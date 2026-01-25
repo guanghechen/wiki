@@ -1,3 +1,24 @@
+# Tool: Bash
+
+## 作用
+Bash 命令执行工具，用于运行终端命令。工作目录在命令之间保持不变，但 shell 状态不会保持。
+
+## 使用场景
+- 运行 git、npm、docker 等终端命令
+- 执行构建、测试、部署脚本
+- 系统管理任务
+
+## 关键点
+- 仅用于终端操作，不要用于文件操作（使用专用工具）
+- 命令超时默认 2 分钟，最长 10 分钟
+- 输出超过 30000 字符会被截断
+- 包含空格的路径必须用双引号
+- 独立命令可以并行调用；有依赖的命令用 `&&` 串联
+- 避免使用 `find`、`grep`、`cat`、`sed`、`awk`、`echo` 等命令（使用专用工具）
+- 尽量使用绝对路径，避免使用 `cd`
+
+====================================================================================================
+
 Executes a given bash command with optional timeout. Working directory persists between commands; shell state (everything else) does not. The shell environment is initialized from the user's profile (bash or zsh).
 
 IMPORTANT: This tool is for terminal operations like git, npm, docker, etc. DO NOT use it for file operations (reading, writing, editing, searching, finding files) - use the specialized tools for this instead.
@@ -5,8 +26,8 @@ IMPORTANT: This tool is for terminal operations like git, npm, docker, etc. DO N
 Before executing the command, please follow these steps:
 
 1. Directory Verification:
-   - If the command will create new directories or files, first use \`ls\` to verify the parent directory exists and is the correct location
-   - For example, before running "mkdir foo/bar", first use \`ls foo\` to check that "foo" exists and is the intended parent directory
+   - If the command will create new directories or files, first use `ls` to verify the parent directory exists and is the correct location
+   - For example, before running "mkdir foo/bar", first use `ls foo` to check that "foo" exists and is the intended parent directory
 
 2. Command Execution:
    - Always quote file paths that contain spaces with double quotes (e.g., cd "path with spaces/file.txt")
@@ -23,10 +44,10 @@ Usage notes:
   - You can specify an optional timeout in milliseconds (up to 600000ms / 10 minutes). If not specified, commands will timeout after 120000ms (2 minutes).
   - It is very helpful if you write a clear, concise description of what this command does. For simple commands, keep it brief (5-10 words). For complex commands (piped commands, obscure flags, or anything hard to understand at a glance), add enough context to clarify what it does.
   - If the output exceeds 30000 characters, output will be truncated before being returned to you.
-  
+
   - You can use the `run_in_background` parameter to run the command in the background. Only use this if you don't need the result immediately and are OK being notified when the command completes later. You do not need to check the output right away - you'll be notified when it finishes. You do not need to use '&' at the end of the command when using this parameter.
-  
-  - Avoid using Bash with the \`find\`, \`grep\`, \`cat\`, \`head\`, \`tail\`, \`sed\`, \`awk\`, or \`echo\` commands, unless explicitly instructed or when these commands are truly necessary for the task. Instead, always prefer using the dedicated tools for these commands:
+
+  - Avoid using Bash with the `find`, `grep`, `cat`, `head`, `tail`, `sed`, `awk`, or `echo` commands, unless explicitly instructed or when these commands are truly necessary for the task. Instead, always prefer using the dedicated tools for these commands:
     - File search: Use Glob (NOT find or ls)
     - Content search: Use Grep (NOT grep or rg)
     - Read files: Use Read (NOT cat/head/tail)
@@ -35,14 +56,13 @@ Usage notes:
     - Communication: Output text directly (NOT echo/printf)
   - When issuing multiple commands:
     - If the commands are independent and can run in parallel, make multiple Bash tool calls in a single message. For example, if you need to run "git status" and "git diff", send a single message with two Bash tool calls in parallel.
-    - If the commands depend on each other and must run sequentially, use a single Bash call with '&&' to chain them together (e.g., \`git add . && git commit -m "message" && git push\`). For instance, if one operation must complete before another starts (like mkdir before cp, Write before Bash for git operations, or git add before git commit), run these operations sequentially instead.
+    - If the commands depend on each other and must run sequentially, use a single Bash call with '&&' to chain them together (e.g., `git add . && git commit -m "message" && git push`). For instance, if one operation must complete before another starts (like mkdir before cp, Write before Bash for git operations, or git add before git commit), run these operations sequentially instead.
     - Use ';' only when you need to run commands sequentially but don't care if earlier commands fail
     - DO NOT use newlines to separate commands (newlines are ok in quoted strings)
-  - Try to maintain your current working directory throughout the session by using absolute paths and avoiding usage of \`cd\`. You may use \`cd\` if the User explicitly requests it.
+  - Try to maintain your current working directory throughout the session by using absolute paths and avoiding usage of `cd`. You may use `cd` if the User explicitly requests it.
     <good-example>
     pytest /foo/bar/tests
     </good-example>
     <bad-example>
     cd /foo/bar && pytest tests
     </bad-example>
-

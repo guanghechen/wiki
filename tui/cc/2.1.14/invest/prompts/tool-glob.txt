@@ -1,3 +1,20 @@
+# Tool: Glob
+
+## 作用
+快速文件模式匹配工具，基于 glob 模式查找文件。适用于任何规模的代码库。
+
+## 使用场景
+- 按文件名模式查找文件（如 `**/*.js`、`src/**/*.ts`）
+- 查找特定类型的所有文件
+- 定位配置文件或特定后缀的文件
+
+## 关键点
+- 返回按修改时间排序的文件路径列表
+- 对于开放式搜索（可能需要多轮 glob/grep），建议使用 Task tool 的 Explore agent
+- 可以并行执行多个搜索
+
+====================================================================================================
+
 - Fast file pattern matching tool that works with any codebase size
 - Supports glob patterns like "**/*.js" or "src/**/*.ts"
 - Returns matching file paths sorted by modification time

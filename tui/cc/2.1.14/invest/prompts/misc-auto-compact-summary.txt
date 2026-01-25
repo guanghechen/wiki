@@ -1,0 +1,48 @@
+# Misc: Auto-Compact Summary
+
+## 作用
+自动压缩摘要 prompt。当对话达到 context 上限时，用于生成详细的对话摘要以保留关键信息。
+
+## 使用场景
+- 对话 token 数量接近或超过上限时自动触发
+- 需要压缩对话历史但保留所有重要细节
+- 确保压缩后可以无缝继续开发工作
+
+## 关键点
+- 在最终摘要前使用 `<analysis>` 标签组织分析思路
+- 摘要需包含 8 个部分：Primary Request、Key Technical Concepts、Files and Code、Errors、Problem Solving、All user messages、Pending Tasks、Current Work
+- 特别关注最近的消息和用户反馈
+- 防止任务漂移（task drift）- 下一步必须直接与用户最近的明确请求对齐
+
+====================================================================================================
+
+Your task is to create a detailed summary of the conversation so far, paying close attention to the user's explicit requests and your previous actions.
+This summary should be thorough in capturing technical details, code patterns, and architectural decisions that would be essential for continuing development work without losing context.
+
+Before providing your final summary, wrap your analysis in <analysis> tags to organize your thoughts and ensure you've covered all necessary points. In your analysis process:
+
+1. Chronologically analyze each message and section of the conversation. For each section thoroughly identify:
+   - The user's explicit requests and intents
+   - Your approach to addressing the user's requests
+   - Key decisions, technical concepts and code patterns
+   - Specific details like:
+     - file names
+     - full code snippets
+     - function signatures
+     - file edits
+  - Errors that you ran into and how you fixed them
+  - Pay special attention to specific user feedback that you received, especially if the user told you to do something differently.
+2. Double-check for technical accuracy and completeness, addressing each required element thoroughly.
+
+Your summary should include the following sections:
+
+1. Primary Request and Intent: Capture all of the user's explicit requests and intents in detail
+2. Key Technical Concepts: List all important technical concepts, technologies, and frameworks discussed.
+3. Files and Code Sections: Enumerate specific files and code sections examined, modified, or created. Pay special attention to the most recent messages and include full code snippets where applicable and include a summary of why this file read or edit is important.
+4. Errors and fixes: List all errors that you ran into, and how you fixed them. Pay special attention to specific user feedback that you received, especially if the user told you to do something differently.
+5. Problem Solving: Document problems solved and any ongoing troubleshooting efforts.
+6. All user messages: List ALL user messages that are not tool results. These are critical for understanding the users' feedback and changing intent.
+6. Pending Tasks: Outline any pending tasks that you have explicitly been asked to work on.
+7. Current Work: Describe in detail precisely what was being worked on immediately before this summary request, paying special attention to the most recent messages from both user and assistant. Include file names and code snippets where applicable.
+8. Optional Next Step: List the next step that you will take that is related to the most recent work you were doing. IMPORTANT: ensure that this step is DIRECTLY in line with the user's most recent explicit requests, and the task you were working on immediately before this summary request. If your last task was concluded, then only list next steps if they are explicitly in line with the users request. Do not start on tangential requests or really old requests that were already completed without confirming with the user first.
+   If there is a next step, include direct quotes from the most recent conversation showing exactly what task you were working on and where you left off. This should be verbatim to ensure there's no drift in task interpretation.

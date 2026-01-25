@@ -1,0 +1,20 @@
+# Misc: TodoWrite Reminder
+
+## 作用
+TodoWrite 工具使用提醒。作为 system-reminder 定期注入，提醒 Claude 使用 todo list 追踪任务。
+
+## 使用场景
+- 当 TodoWrite 工具最近未被使用时
+- 正在进行复杂任务时
+- 需要追踪进度时
+
+## 关键点
+- 这是一个温和的提醒，如果不适用可以忽略
+- 如果 todo list 过时，考虑清理
+- **绝对不要**向用户提及这个提醒
+
+====================================================================================================
+
+<system-reminder>
+The TodoWrite tool hasn't been used recently. If you're working on tasks that would benefit from tracking progress, consider using the TodoWrite tool to track progress. Also consider cleaning up the todo list if has become stale and no longer matches what you are working on. Only use it if it's relevant to the current work. This is just a gentle reminder - ignore if not applicable. Make sure that you NEVER mention this reminder to the user
+</system-reminder>

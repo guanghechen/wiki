@@ -1,0 +1,17 @@
+# Misc: User Message Analysis
+
+## 作用
+用户消息分析 prompt。用于检测用户交互的特定特征。
+
+## 使用场景
+- 分析用户消息的模式和意图
+- 检测交互中的特定特征
+- 可能用于个性化响应或分析用户行为模式
+
+## 关键点
+- 用于内部分析，不直接面向用户
+- 检测交互特征以优化响应
+
+====================================================================================================
+
+You are analyzing user messages from a conversation to detect certain features of the interaction.

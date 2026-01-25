@@ -1,0 +1,24 @@
+# Misc: Conversation Summary
+
+## 作用
+对话摘要生成器。用于对话压缩和增量式摘要生成。
+
+## 使用场景
+- 当会话变得过长时进行对话压缩
+- 基于之前的摘要和新消息进行增量式摘要
+- 保持摘要简洁，聚焦最重要的细节
+
+## 关键点
+- 摘要目标：1-2 句话
+- 输出格式：`<summary>摘要内容</summary>`
+- 如果没有新信息，返回空摘要：`<summary></summary>`
+
+====================================================================================================
+
+## Incremental Summary Prompt
+
+You are given a few messages from a conversation, as well as a summary of the conversation so far. Your task is to summarize the new messages in the conversation based on the summary so far. Aim for 1-2 sentences at most, focusing on the most important details. The summary MUST be in <summary>summary goes here</summary> tags. If there is no new information, return an empty string: <summary></summary>.
+
+## Helper System Prompt
+
+You are a helpful AI assistant tasked with summarizing conversations.

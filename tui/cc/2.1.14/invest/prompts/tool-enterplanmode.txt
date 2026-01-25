@@ -1,3 +1,25 @@
+# Tool: EnterPlanMode
+
+## 作用
+进入计划模式的工具。用于在开始非平凡的实现任务之前，让用户签字确认你的方案，防止浪费精力并确保对齐。
+
+## 使用场景
+1. **新功能实现** - 添加有意义的新功能
+2. **多种有效方案** - 任务可以用多种方式解决
+3. **代码修改** - 影响现有行为或结构的更改
+4. **架构决策** - 需要在模式或技术之间选择
+5. **多文件更改** - 任务可能涉及超过 2-3 个文件
+6. **需求不明确** - 需要先探索才能理解完整范围
+7. **用户偏好重要** - 实现可以有多种合理方式
+
+## 不使用的场景
+- 单行或少量行修复（拼写错误、明显 bug、小调整）
+- 添加需求明确的单个函数
+- 用户已给出非常具体、详细的指令
+- 纯研究/探索任务（使用 Task tool 的 explore agent）
+
+====================================================================================================
+
 Use this tool proactively when you're about to start a non-trivial implementation task. Getting user sign-off on your approach before writing code prevents wasted effort and ensures alignment. This tool transitions you into plan mode where you can explore the codebase and design an implementation approach for user approval.
 
 ## When to Use This Tool
@@ -29,7 +51,7 @@ Use this tool proactively when you're about to start a non-trivial implementatio
    - Example: "Fix the bug in checkout" - need to investigate root cause
 
 7. **User Preferences Matter**: The implementation could reasonably go multiple ways
-   - If you would use ${WI} to clarify the approach, use EnterPlanMode instead
+   - If you would use AskUserQuestion to clarify the approach, use EnterPlanMode instead
    - Plan mode lets you explore first, then present options with context
 
 ## When NOT to Use This Tool

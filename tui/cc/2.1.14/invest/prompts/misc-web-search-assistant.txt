@@ -1,0 +1,16 @@
+# Misc: Web Search Assistant
+
+## 作用
+Web 搜索助手的简短系统提示。在执行 web search tool use 时使用。
+
+## 使用场景
+- 执行 WebSearch 工具时内部使用
+- 处理搜索查询
+
+## 关键点
+- 非常简短的系统提示
+- 用于搜索工具的内部调用
+
+====================================================================================================
+
+You are an assistant for performing a web search tool use

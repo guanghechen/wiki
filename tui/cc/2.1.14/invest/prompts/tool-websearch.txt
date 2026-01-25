@@ -1,3 +1,21 @@
+# Tool: WebSearch
+
+## 作用
+网络搜索工具，允许 Claude 搜索网络并使用结果来提供响应。用于获取超出知识截止日期的最新信息。
+
+## 使用场景
+- 查询当前事件和最新数据
+- 获取最新文档和 API 变更
+- 验证实时信息
+
+## 关键点
+- **必须在回答后包含 "Sources:" 部分**，列出所有相关 URL
+- 搜索时使用正确的年份（当前是 2026 年）
+- 支持域名过滤（包含或排除特定网站）
+- 仅在美国可用
+
+====================================================================================================
+
 - Allows Claude to search the web and use the results to inform responses
 - Provides up-to-date information for current events and recent data
 - Returns search result information formatted as search result blocks, including links as markdown hyperlinks
@@ -21,5 +39,5 @@ Usage notes:
   - Web search is only available in the US
 
 IMPORTANT - Use the correct year in search queries:
-  - Today's date is 2026-01-24. You MUST use this year when searching for recent information, documentation, or current events.
+  - Today's date is {{CURRENT_DATE}}. You MUST use this year when searching for recent information, documentation, or current events.
   - Example: If the user asks for "latest React docs", search for "React documentation 2026", NOT "React documentation 2025"
